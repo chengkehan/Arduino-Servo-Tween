@@ -91,6 +91,58 @@ TweenBase* Factory::create(TweenType servoTweenType, int beginning, int changing
         return new TweenQuintEaseInOut(beginning, changing, duration, timeScale);
     }
 
+    if (servoTweenType == SineEaseIn)
+    {
+        return new TweenSineEaseIn(beginning, changing, duration, timeScale);
+    }
+    if (servoTweenType == SineEaseOut)
+    {
+        return new TweenSineEaseOut(beginning, changing, duration, timeScale);
+    }
+    if (servoTweenType == SineEaseInOut)
+    {
+        return new TweenSineEaseInOut(beginning, changing, duration, timeScale);
+    }
+
+    if (servoTweenType == ExpoEaseIn)
+    {
+        return new TweenExpoEaseIn(beginning, changing, duration, timeScale);
+    }
+    if (servoTweenType == ExpoEaseOut)
+    {
+        return new TweenExpoEaseOut(beginning, changing, duration, timeScale);
+    }
+    if (servoTweenType == ExpoEaseInOut)
+    {
+        return new TweenExpoEaseInOut(beginning, changing, duration, timeScale);
+    }
+
+    if (servoTweenType == CircEaseIn)
+    {
+        return new TweenCircEaseIn(beginning, changing, duration, timeScale);
+    }
+    if (servoTweenType == CircEaseOut)
+    {
+        return new TweenCircEaseOut(beginning, changing, duration, timeScale);
+    }
+    if (servoTweenType == CircEaseInOut)
+    {
+        return new TweenCircEaseInOut(beginning, changing, duration, timeScale);
+    }
+
+    if (servoTweenType == BounceEaseIn)
+    {
+        return new TweenBounceEaseIn(beginning, changing, duration, timeScale);
+    }
+    if (servoTweenType == BounceEaseOut)
+    {
+        return new TweenBounceEaseOut(beginning, changing, duration, timeScale);
+    }
+    if (servoTweenType == BounceEaseInOut)
+    {
+        return new TweenBounceEaseInOut(beginning, changing, duration, timeScale);
+    }
+
     return nullptr;
 }
 
@@ -313,4 +365,184 @@ int TweenQuintEaseInOut::exe()
         return c / 2 * t * t * t * t * t + b;
     }
     return c / 2 * ((t -= 2) * t * t * t * t + 2) + b;
+}
+
+//----------------------- TweenSineEaseIn -----------------
+
+TweenSineEaseIn::TweenSineEaseIn(int b, int c, int d, float timeScale) : TweenBase(b, c, d, timeScale) { }
+
+int TweenSineEaseIn::exe()
+{
+    TweenBase::exe();
+    long double t = this->t;
+    return -c * cos(t / d * (PI / 2)) + c + b;
+}
+
+//----------------------- TweenSineEaseOut -----------------
+
+TweenSineEaseOut::TweenSineEaseOut(int b, int c, int d, float timeScale) : TweenBase(b, c, d, timeScale) { }
+
+int TweenSineEaseOut::exe()
+{
+    TweenBase::exe();
+    long double t = this->t;
+    return c * sin(t / d * (PI / 2)) + b;
+}
+
+//----------------------- TweenSineEaseInOut -----------------
+
+TweenSineEaseInOut::TweenSineEaseInOut(int b, int c, int d, float timeScale) : TweenBase(b, c, d, timeScale) { }
+
+int TweenSineEaseInOut::exe()
+{
+    TweenBase::exe();
+    long double t = this->t;
+    return -c / 2 * (cos(PI * t/ d) - 1) + b;
+}
+
+//----------------------- TweenExpoEaseIn -----------------
+
+TweenExpoEaseIn::TweenExpoEaseIn(int b, int c, int d, float timeScale) : TweenBase(b, c, d, timeScale) { }
+
+int TweenExpoEaseIn::exe()
+{
+    TweenBase::exe();
+    long double t = this->t;
+    return (t == 0) ? b : c * pow(2, 10 * (t / d - 1)) + b;
+}
+
+//----------------------- TweenExpoEaseOut -----------------
+
+TweenExpoEaseOut::TweenExpoEaseOut(int b, int c, int d, float timeScale) : TweenBase(b, c, d, timeScale) { }
+
+int TweenExpoEaseOut::exe()
+{
+    TweenBase::exe();
+    long double t = this->t;
+    return (t == d) ? b + c : c * (-pow(2, -10 * t / d) + 1) + b;
+}
+
+//----------------------- TweenExpoEaseInOut -----------------
+
+TweenExpoEaseInOut::TweenExpoEaseInOut(int b, int c, int d, float timeScale) : TweenBase(b, c, d, timeScale) { }
+
+int TweenExpoEaseInOut::exe()
+{
+    TweenBase::exe();
+    long double t = this->t;
+    if (t == 0)
+    {
+        return b;
+    }
+    if (t == d)
+    {
+        return b + c;
+    }
+    if ((t /= d / 2) < 1)
+    {
+        return c / 2 * pow(2, 10 * (t - 1)) + b;
+    }
+    return c / 2 * (-pow(2, -10 * --t) + 2) + b;
+}
+
+//----------------------- TweenCircEaseIn -----------------
+
+TweenCircEaseIn::TweenCircEaseIn(int b, int c, int d, float timeScale) : TweenBase(b, c, d, timeScale) { }
+
+int TweenCircEaseIn::exe()
+{
+    TweenBase::exe();
+    long double t = this->t;
+    return -c * (sqrt(1 - (t /= d) * t) - 1) + b;
+}
+
+//----------------------- TweenCircEaseOut -----------------
+
+TweenCircEaseOut::TweenCircEaseOut(int b, int c, int d, float timeScale) : TweenBase(b, c, d, timeScale) { }
+
+int TweenCircEaseOut::exe()
+{
+    TweenBase::exe();
+    long double t = this->t;
+    return c * sqrt(1 - (t = t / d - 1) * t) + b;
+}
+
+//----------------------- TweenCircEaseInOut -----------------
+
+TweenCircEaseInOut::TweenCircEaseInOut(int b, int c, int d, float timeScale) : TweenBase(b, c, d, timeScale) { }
+
+int TweenCircEaseInOut::exe()
+{
+    TweenBase::exe();
+    long double t = this->t;
+    if ((t /= d / 2) < 1)
+    {
+        return -c / 2 * (sqrt(1 - t * t) - 1) + b;
+    }
+    return c / 2 * (sqrt(1 - (t -= 2) * t) + 1) + b;
+}
+
+//----------------------- TweenBounceEaseIn -----------------
+
+TweenBounceEaseIn::TweenBounceEaseIn(int b, int c, int d, float timeScale) : TweenBase(b, c, d, timeScale) { }
+
+int TweenBounceEaseIn::exe()
+{
+    TweenBase::exe();
+    long double t = this->t;
+    return TweenBounceEaseIn::calculate(t, b, c, d);
+}
+
+int TweenBounceEaseIn::calculate(int t, int b, int c, int d)
+{
+    return c - TweenBounceEaseOut::calculate(d - t, 0, c, d) + b;
+}
+
+//----------------------- TweenBounceEaseOut -----------------
+
+TweenBounceEaseOut::TweenBounceEaseOut(int b, int c, int d, float timeScale) : TweenBase(b, c, d, timeScale) { }
+
+int TweenBounceEaseOut::exe()
+{
+    TweenBase::exe();
+    long double t = this->t;
+    return TweenBounceEaseOut::calculate(t, b, c, d);
+}
+
+int TweenBounceEaseOut::calculate(int t, int b, int c, int d)
+{
+    if ((t /= d) < (1 / 2.75))
+    {
+        return c * (7.5625 * t * t) + b;
+    }
+    else if (t < (2 / 2.75))
+    {
+        return c * (7.5625 * (t -= (1.5 / 2.75)) * t + 0.75) + b;
+    }
+    else if (t < (2.5 / 2.75))
+    {
+        return c * (7.5625 * (t -= (2.25 / 2.75)) * t + 0.9375) + b;
+    }
+    else
+    {
+        return c * (7.5625 * (t -= (2.625 / 2.75)) * t + 0.984375) + b;
+    }
+}
+
+//----------------------- TweenBounceEaseInOut -----------------
+
+TweenBounceEaseInOut::TweenBounceEaseInOut(int b, int c, int d, float timeScale) : TweenBase(b, c, d, timeScale) { }
+
+int TweenBounceEaseInOut::exe()
+{
+    TweenBase::exe();
+    long double t = this->t;
+    if (t < d / 2)
+    {
+        return TweenBounceEaseIn::calculate(t * 2, 0, c, d) * 0.5 + b;
+    }
+    else 
+    {   
+        return TweenBounceEaseOut::calculate(t * 2 - d, 0, c, d) * 0.5 + c * 0.5 + b;
+    }
 }
