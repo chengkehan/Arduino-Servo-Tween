@@ -9,8 +9,18 @@
 enum ServoTweenType
 {
     ServoTweenTypeLinear,
+    ServoTweenTypeQuadEaseIn,
+    ServoTweenTypeQuadEaseOut,
+    ServoTweenTypeQuadEaseInOut,
     ServoTweenTypeCubicEaseIn,
-    ServoTweenTypeCubicEaseOut
+    ServoTweenTypeCubicEaseOut,
+    ServoTweenTypeCubicEaseInOut,
+    ServoTweenTypeQuartEaseIn,
+    ServoTweenTypeQuartEaseOut,
+    ServoTweenTypeQuartEaseInOut,
+    ServoTweenTypeQuintEaseIn,
+    ServoTweenTypeQuintEaseOut,
+    ServoTweenTypeQuintEaseInOut
 };
 
 //----------------------- ServoTweenBase -----------------
@@ -36,7 +46,7 @@ protected:
 class ServoTweenFactory
 {
 public:
-    static ServoTweenBase* create(ServoTweenType servoTweenType, int beginning, int changing, int duration, float timeScale);
+    static ServoTweenBase* create(ServoTweenType servoTweenType, int beginning, int changing, int duration, float timeScale = 1);
     static void destroy(ServoTweenBase* servoTweenBase);
 };
 
@@ -73,6 +83,33 @@ public:
     int exe() override;
 };
 
+//----------------------- ServoTweenQuadEaseIn -----------------
+
+class ServoTweenQuadEaseIn : public ServoTweenBase
+{
+public:
+    ServoTweenQuadEaseIn(int b, int c, int d, float timeScale);
+    int exe() override; 
+};
+
+//----------------------- ServoTweenQuadEaseOut -----------------
+
+class ServoTweenQuadEaseOut : public ServoTweenBase
+{
+public:
+    ServoTweenQuadEaseOut(int b, int c, int d, float timeScale);
+    int exe() override; 
+};
+
+//----------------------- ServoTweenQuadEaseInOut -----------------
+
+class ServoTweenQuadEaseInOut : public ServoTweenBase
+{
+public:
+    ServoTweenQuadEaseInOut(int b, int c, int d, float timeScale);
+    int exe() override; 
+};
+
 //----------------------- ServoTweenCubicEaseIn -----------------
 
 class ServoTweenCubicEaseIn : public ServoTweenBase
@@ -88,6 +125,69 @@ class ServoTweenCubicEaseOut : public ServoTweenBase
 {
 public:
     ServoTweenCubicEaseOut(int b, int c, int d, float timeScale);
+    int exe() override;
+};
+
+//----------------------- ServoTweenCubicEaseInOut -----------------
+
+class ServoTweenCubicEaseInOut : public ServoTweenBase
+{
+public:
+    ServoTweenCubicEaseInOut(int b, int c, int d, float timeScale);
+    int exe() override;
+};
+
+//----------------------- ServoTweenQuartEaseIn -----------------
+
+class ServoTweenQuartEaseIn : public ServoTweenBase
+{
+public:
+    ServoTweenQuartEaseIn(int b, int c, int d, float timeScale);
+    int exe() override;
+};
+
+//----------------------- ServoTweenQuartEaseOut -----------------
+
+class ServoTweenQuartEaseOut : public ServoTweenBase
+{
+public:
+    ServoTweenQuartEaseOut(int b, int c, int d, float timeScale);
+    int exe() override;
+};
+
+//----------------------- ServoTweenQuartEaseInOut -----------------
+
+class ServoTweenQuartEaseInOut : public ServoTweenBase
+{
+public:
+    ServoTweenQuartEaseInOut(int b, int c, int d, float timeScale);
+    int exe() override;
+};
+
+//----------------------- ServoTweenQuintEaseIn -----------------
+
+class ServoTweenQuintEaseIn : public ServoTweenBase
+{
+public:
+    ServoTweenQuintEaseIn(int b, int c, int d, float timeScale);
+    int exe() override;
+};
+
+//----------------------- ServoTweenQuintEaseOut -----------------
+
+class ServoTweenQuintEaseOut : public ServoTweenBase
+{
+public:
+    ServoTweenQuintEaseOut(int b, int c, int d, float timeScale);
+    int exe() override;
+};
+
+//----------------------- ServoTweenQuintEaseInOut -----------------
+
+class ServoTweenQuintEaseInOut : public ServoTweenBase
+{
+public:
+    ServoTweenQuintEaseInOut(int b, int c, int d, float timeScale);
     int exe() override;
 };
 
