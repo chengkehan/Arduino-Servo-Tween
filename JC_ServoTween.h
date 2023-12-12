@@ -34,7 +34,13 @@ namespace JC_ServoTween
         CircEaseInOut,
         BounceEaseIn,
         BounceEaseOut,
-        BounceEaseInOut
+        BounceEaseInOut,
+        BackEaseIn,
+        BackEaseOut,
+        BackEaseInOut,
+        ElasticEaseIn,
+        ElasticEaseOut,
+        ElasticEaseInOut
     };
 
     //----------------------- TweenBase -----------------
@@ -43,6 +49,8 @@ namespace JC_ServoTween
     {
     public:
         TweenBase(int b, int c, int d, float timeScale);
+        TweenBase(int b, int c, int d, float s, float timeScale);
+        TweenBase(int b, int c, int d, float a, float p, float timeScale);
         virtual int exe();
         bool isComplete();
 
@@ -51,6 +59,9 @@ namespace JC_ServoTween
         int c; // changed in value
         long double t; // current time
         int d; // duration
+        float s;
+        float a;
+        float p;
         float timeScale;
         unsigned long t0;
     };
@@ -60,7 +71,7 @@ namespace JC_ServoTween
     class Factory
     {
     public:
-        static TweenBase* create(TweenType servoTweenType, int beginning, int changing, int duration, float timeScale = 1);
+        static TweenBase* create(TweenType tweenType, int beginning, int changing, int duration, float s = 0, float a = 0, float p = 0, float timeScale = 1);
         static void destroy(TweenBase* servoTweenBase);
     };
 
@@ -312,6 +323,60 @@ namespace JC_ServoTween
     {
     public:
         TweenBounceEaseInOut(int b, int c, int d, float timeScale);
+        int exe() override;
+    };
+
+    //----------------------- TweenBackEaseIn -----------------
+
+    class TweenBackEaseIn : public TweenBase
+    {
+    public:
+        TweenBackEaseIn(int b, int c, int d, float s, float timeScale);
+        int exe() override;
+    };
+
+    //----------------------- TweenBackEaseOut -----------------
+
+    class TweenBackEaseOut : public TweenBase
+    {
+    public:
+        TweenBackEaseOut(int b, int c, int d, float s, float timeScale);
+        int exe() override;
+    };
+
+    //----------------------- TweenBackEaseInOut -----------------
+
+    class TweenBackEaseInOut : public TweenBase
+    {
+    public:
+        TweenBackEaseInOut(int b, int c, int d, float s, float timeScale);
+        int exe() override;
+    };
+
+    //----------------------- TweenElasticEaseIn -----------------
+
+    class TweenElasticEaseIn : public TweenBase
+    {
+    public:
+        TweenElasticEaseIn(int b, int c, int d, float a, float p, float timeScale);
+        int exe() override;
+    };
+
+    //----------------------- TweenElasticEaseOut -----------------
+
+    class TweenElasticEaseOut : public TweenBase
+    {
+    public:
+        TweenElasticEaseOut(int b, int c, int d, float a, float p, float timeScale);
+        int exe() override;
+    };
+
+    //----------------------- TweenElasticEaseInOut -----------------
+
+    class TweenElasticEaseInOut : public TweenBase
+    {
+    public:
+        TweenElasticEaseInOut(int b, int c, int d, float a, float p, float timeScale);
         int exe() override;
     };
 }
