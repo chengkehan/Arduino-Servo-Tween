@@ -86,6 +86,8 @@ namespace JC_ServoTween
         void setup(int limitMin, int limitMax, int pin, int initialAngleInMs);
         void to(TweenBase *tween);
         void loop();
+        int getLimitMin();
+        int getLimitMax();
 
     private:
         void destroyTween();

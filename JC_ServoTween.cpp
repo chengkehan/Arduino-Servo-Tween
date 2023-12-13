@@ -259,6 +259,16 @@ int ServoTween::clampAngleInMs(int angleInMs)
     return min(max(angleInMs, limitMin), limitMax);
 }
 
+int ServoTween::getLimitMin()
+{
+    return this->limitMin;
+}
+
+int ServoTween::getLimitMax()
+{
+    return this->limitMax;
+}
+
 //----------------------- TweenLinear -----------------
 
 TweenLinear::TweenLinear(int b, int c, int d, float timeScale) : TweenBase(b, c, d, timeScale) { }
