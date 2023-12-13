@@ -17,27 +17,6 @@ TweenBase::TweenBase(int b, int c, int d, float timeScale)
     t0 = -1;
 }
 
-TweenBase::TweenBase(int b, int c, int d, float s, float timeScale)
-{
-    this->b = b;
-    this->c = c;
-    this->d = d;
-    this->s = s;
-    this->timeScale = timeScale;
-    t0 = -1;
-}
-
-TweenBase::TweenBase(int b, int c, int d, float a, float p, float timeScale)
-{
-    this->b = b;
-    this->c = c;
-    this->d = d;
-    this->a = a;
-    this->p = p;
-    this->timeScale = timeScale;
-    t0 = -1;
-}
-
 int TweenBase::exe()
 {
     if (t0 == -1)
@@ -56,7 +35,7 @@ bool TweenBase::isComplete()
 
 //----------------------- Factory -----------------
 
-TweenBase* Factory::create(TweenType tweenType, int beginning, int changing, int duration, float s, float a, float p, float timeScale)
+TweenBase* Factory::create(TweenType tweenType, int beginning, int changing, int duration, float timeScale)
 {
     if (tweenType == Linear)
     {
@@ -165,32 +144,6 @@ TweenBase* Factory::create(TweenType tweenType, int beginning, int changing, int
     if (tweenType == BounceEaseInOut)
     {
         return new TweenBounceEaseInOut(beginning, changing, duration, timeScale);
-    }
-
-    if (tweenType == BackEaseIn)
-    {
-        return new TweenBackEaseIn(beginning, changing, duration, s, timeScale);
-    }
-    if (tweenType == BackEaseOut)
-    {
-        return new TweenBackEaseOut(beginning, changing, duration, s, timeScale);
-    }
-    if (tweenType == BackEaseInOut)
-    {
-        return new TweenBackEaseInOut(beginning, changing, duration, s, timeScale);
-    }
-
-    if (tweenType == ElasticEaseIn)
-    {
-        return new TweenElasticEaseIn(beginning, changing, duration, a, p, timeScale);
-    }
-    if (tweenType == ElasticEaseOut)
-    {
-        return new TweenElasticEaseOut(beginning, changing, duration, a, p, timeScale);
-    }
-    if (tweenType == ElasticEaseInOut)
-    {
-        return new TweenElasticEaseInOut(beginning, changing, duration, a, p, timeScale);
     }
 
     return nullptr;
@@ -607,163 +560,4 @@ int TweenBounceEaseInOut::exe()
     }
 }
 
-//----------------------- TweenBackEaseIn -----------------
 
-TweenBackEaseIn::TweenBackEaseIn(int b, int c, int d, float s, float timeScale) : TweenBase(b, c, d, s, timeScale) { }
-
-int TweenBackEaseIn::exe()
-{
-    TweenBase::exe();
-    long double t = this->t;
-    float s = this->s;
-    if (EQUAL_ZERO(s))
-    {
-        s = 1.70158;
-    }
-    return c * (t /= d) * t * ((s + 1) * t - s) + b;
-}
-
-//----------------------- TweenBackEaseOut -----------------
-
-TweenBackEaseOut::TweenBackEaseOut(int b, int c, int d, float s, float timeScale) : TweenBase(b, c, d, s, timeScale) { }
-
-int TweenBackEaseOut::exe()
-{
-    TweenBase::exe();
-    long double t = this->t;
-    float s = this->s;
-    if (EQUAL_ZERO(s))
-    {
-        s = 1.70158;
-    }
-    return c * ((t = t / d - 1) * t * ((s + 1) * t + s) + 1) + b;
-}
-
-//----------------------- TweenBackEaseInOut -----------------
-
-TweenBackEaseInOut::TweenBackEaseInOut(int b, int c, int d, float s, float timeScale) : TweenBase(b, c, d, s, timeScale) { }
-
-int TweenBackEaseInOut::exe()
-{
-    TweenBase::exe();
-    long double t = this->t;
-    float s = this->s;
-    if (EQUAL_ZERO(s))
-    {
-        s = 1.70158;
-    }
-    if ((t /= d / 2) < 1)
-    {
-        return c / 2 * (t * t * (((s *= (1.525f)) + 1) * t - s)) + b;
-    }
-    return c / 2 * ((t -= 2) * t * (((s *= (1.525f)) + 1) * t + s) + 2) + b;
-}
-
-//----------------------- TweenElasticEaseIn -----------------
-
-TweenElasticEaseIn::TweenElasticEaseIn(int b, int c, int d, float a, float p, float timeScale) : TweenBase(b, c, d, a, p, timeScale) { }
-
-int TweenElasticEaseIn::exe()
-{
-    TweenBase::exe();
-    long double t = this->t;
-    float a = this->a;
-    float p = this->p;
-    float s = 0;
-    if (t == 0)
-    {
-        return b;
-    }
-    if ((t /= d) == 1)
-    {
-        return b + c;
-    }
-    if (!p)
-    {
-        p = d * 0.3;
-    }
-    if (!a || a < fabsf(c))
-    {
-        a = c;
-        s = p/4;
-    }
-    else
-    {
-        s = p / (2 * PI) * asin (c / a);
-    }
-    return -(a * pow(2, 10 * (t -= 1)) * sin((t * d - s) * (2 * PI) / p)) + b;
-}
-
-//----------------------- TweenElasticEaseOut -----------------
-
-TweenElasticEaseOut::TweenElasticEaseOut(int b, int c, int d, float a, float p, float timeScale) : TweenBase(b, c, d, a, p, timeScale) { }
-
-int TweenElasticEaseOut::exe()
-{
-    TweenBase::exe();
-    long double t = this->t;
-    float a = this->a;
-    float p = this->p;
-    float s = 0;
-    if (t == 0)
-    {
-        return b;
-    }
-    if ((t /= d) == 1)
-    {
-        return (b + c);
-    }
-    if (!p)
-    {
-        p = d * 0.3;
-    }
-    if (!a || a < fabsf(c))
-    {
-        a = c;
-        s = p / 4;
-    }
-    else
-    {
-        s = p / (2 * PI) * sin((float)c / a);
-    }
-    return (a * pow(2.0, (int) - 10 * t) * sin((t * d - s) * (2 * PI) / p) + c + b);
-}
-
-//----------------------- TweenElasticEaseInOut -----------------
-
-TweenElasticEaseInOut::TweenElasticEaseInOut(int b, int c, int d, float a, float p, float timeScale) : TweenBase(b, c, d, a, p, timeScale) { }
-
-int TweenElasticEaseInOut::exe()
-{
-    TweenBase::exe();
-    long double t = this->t;
-    float a = this->a;
-    float p = this->p;
-        float s = 0;
-    if (t == 0)
-    {
-        return b;
-    }
-    if ((t /= d / 2) == 2)
-    {
-        return b + c;
-    }
-    if (!p)
-    {
-        p = d * (0.3 * 1.5);
-    }
-    if (!a || a < fabsf(c))
-    {
-        a = c;
-        s = p / 4;
-    }
-    else
-    {
-        s = p / (2 * PI) * asin (c / a);
-    }
-    if (t < 1)
-    {
-        return -0.5 * (a * pow(2, 10 * (t -= 1)) * sin( (t * d - s) * (2 * PI) / p )) + b;
-    }
-    return a * pow(2, -10 * (t -= 1)) * sin((t * d - s) * (2 * PI) / p ) * 0.5 + c + b;
-}
