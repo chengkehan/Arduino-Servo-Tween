@@ -91,24 +91,35 @@ Tween* Factory::Fetch(TweenType tweenType, int beginning, int changing, int dura
     if (tweenPool == nullptr)
     {
         tweenPool = new Tween[TWEEN_POOL_CAPACITY];
-        for (int i = 0; i < TWEEN_POOL_CAPACITY; ++i) 
+        if (tweenPool != nullptr)
         {
-            Tween* tween = &tweenPool[i];
-            tween->Set(Undefined, 0, 0, 0, 0);
+            for (int i = 0; i < TWEEN_POOL_CAPACITY; ++i) 
+            {
+                Tween* tween = &tweenPool[i];
+                tween->Set(Undefined, 0, 0, 0, 0);
+            }
         }
     }
 
-    for (int i = 0; i < TWEEN_POOL_CAPACITY; i++)
+    if (tweenPool != nullptr)
     {
-        Tween *tween = &tweenPool[i];
-        if (tween->Type() == Undefined)
+        for (int i = 0; i < TWEEN_POOL_CAPACITY; i++)
         {
-            tween->Set(tweenType, beginning, changing, duration, timeScale);
-            return tween;
+            Tween *tween = &tweenPool[i];
+            if (tween->Type() == Undefined)
+            {
+                tween->Set(tweenType, beginning, changing, duration, timeScale);
+                return tween;
+            }
         }
     }
-
+    
     return nullptr;
+}
+
+Tween* Factory::Fetch2(TweenType tweenType, int beginning, int ending, int duration, float timeScale)
+{
+    return Factory::Fetch(tweenType, beginning, ending - beginning, duration, timeScale);
 }
 
 bool Factory::Release(Tween *pTween)

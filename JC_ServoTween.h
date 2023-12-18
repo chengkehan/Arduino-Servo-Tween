@@ -53,6 +53,7 @@ namespace JC_ServoTween
     {
     public:
         static Tween* Fetch(TweenType tweenType, int beginning, int changing, int duration, float timeScale = 1);
+        static Tween* Fetch2(TweenType tweenType, int beginning, int ending, int duration, float timeScale = 1);
         static bool Release(Tween* tween);
 
     private:
